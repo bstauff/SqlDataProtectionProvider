@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 
-namespace SqlDataProtectionProvider.Extensions
+namespace SqlDataProtectionProvider
 {
     public static class SqlDataProtectionBuilderExtensions
     {
