@@ -1,27 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.DataProtection.Repositories;
+using SqlDataProtectionProvider.Models;
 
 namespace SqlDataProtectionProvider
 {
     public class SqlDataProtectionProvider : IXmlRepository
     {
-        private readonly string _connectionString;
+        private readonly DataProtectionContext _context;
 
-        public SqlDataProtectionProvider(string connectionString)
+        public SqlDataProtectionProvider(DataProtectionContext context)
         {
-            _connectionString = connectionString;
+            _context = context;
         }
 
         public IReadOnlyCollection<XElement> GetAllElements()
         {
-            throw new NotImplementedException();
+            var elements = new ReadOnlyCollection<XElement>(_context.KeyDataEntries.Select(x => XElement.Parse(x.XmlData)).ToList());
+
+            return elements;
         }
 
         public void StoreElement(XElement element, string friendlyName)
         {
-            throw new NotImplementedException();
+            var existingEntity = _context.KeyDataEntries.SingleOrDefault(x => x.FriendlyName.Equals(friendlyName));
+
+            if (existingEntity == null)
+            {
+                //Add the new one
+                _context.KeyDataEntries.Add(new KeyDataEntry
+                {
+                    FriendlyName = friendlyName,
+                    XmlData = element.ToString()
+                });
+            }
+            else
+            {
+                //Update the existing one
+                existingEntity.XmlData = element.ToString();
+            }
+
+            _context.SaveChanges();
         }
     }
 }
