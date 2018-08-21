@@ -14,6 +14,7 @@ namespace SqlDataProtectionProvider
             }
 
             services.AddDbContext<DataProtectionContext>(options => options.UseSqlServer(connectionString));
+            
         }
     }
 }

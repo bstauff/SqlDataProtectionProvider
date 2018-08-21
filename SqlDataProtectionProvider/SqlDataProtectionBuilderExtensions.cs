@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -24,6 +25,10 @@ namespace SqlDataProtectionProvider
 
             builder.Services.AddSingleton<IConfigureOptions<KeyManagementOptions>>(services =>
             {
+                var context = services.GetService<DataProtectionContext>();
+
+                context.Database.Migrate();
+
                 var loggerFactory = services.GetService<ILoggerFactory>() ?? NullLoggerFactory.Instance;
                 return new ConfigureOptions<KeyManagementOptions>(options =>
                 {
