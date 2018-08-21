@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlDataProtectionProvider", "SqlDataProtectionProvider\SqlDataProtectionProvider.csproj", "{ED1A28CC-66FC-4114-BE42-0C6C25E4DE22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlDataProtectionProvider", "SqlDataProtectionProvider\SqlDataProtectionProvider.csproj", "{ED1A28CC-66FC-4114-BE42-0C6C25E4DE22}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SqlDataProtectionProviderDb", "SqlDataProtectionProviderDb\SqlDataProtectionProviderDb.sqlproj", "{B95EC0C4-26AD-4532-8A5B-2EEEDA201296}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlDataProtectionProvider.Extensions", "SqlDataProtectionProvider.Extensions\SqlDataProtectionProvider.Extensions.csproj", "{0FAE520E-5F24-4B06-A0DF-D250A0A66485}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +17,10 @@ Global
 		{ED1A28CC-66FC-4114-BE42-0C6C25E4DE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED1A28CC-66FC-4114-BE42-0C6C25E4DE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED1A28CC-66FC-4114-BE42-0C6C25E4DE22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B95EC0C4-26AD-4532-8A5B-2EEEDA201296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B95EC0C4-26AD-4532-8A5B-2EEEDA201296}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B95EC0C4-26AD-4532-8A5B-2EEEDA201296}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{B95EC0C4-26AD-4532-8A5B-2EEEDA201296}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B95EC0C4-26AD-4532-8A5B-2EEEDA201296}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B95EC0C4-26AD-4532-8A5B-2EEEDA201296}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0FAE520E-5F24-4B06-A0DF-D250A0A66485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FAE520E-5F24-4B06-A0DF-D250A0A66485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FAE520E-5F24-4B06-A0DF-D250A0A66485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FAE520E-5F24-4B06-A0DF-D250A0A66485}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
