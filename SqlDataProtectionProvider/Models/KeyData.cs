@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SqlDataProtectionProvider.Models
 {
-    public class KeyDataEntry
+    public partial class KeyData
     {
         public int Id { get; set; }
         public string FriendlyName { get; set; }

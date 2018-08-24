@@ -6,14 +6,24 @@ using SqlDataProtectionProvider.Models;
 
 namespace SqlDataProtectionProvider
 {
-    public class DataProtectionContext : DbContext
+    public partial class DataProtectionContext : DbContext
     {
-        private readonly DbContextOptions _options;
-        public DbSet<KeyDataEntry> KeyDataEntries { get; set; }
+        public DbSet<KeyData> KeyData { get; set; }
 
-        public DataProtectionContext(DbContextOptions options) : base(options)
+        public DataProtectionContext()
         {
-            _options = options;
+        }
+
+        public DataProtectionContext(DbContextOptions<DataProtectionContext> options) : base(options)
+        {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<KeyData>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
         }
     }
 }

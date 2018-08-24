@@ -4,46 +4,53 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.DataProtection.Repositories;
+using Microsoft.EntityFrameworkCore;
 using SqlDataProtectionProvider.Models;
 
 namespace SqlDataProtectionProvider
 {
     public class SqlDataProtectionProvider : IXmlRepository
     {
-        private readonly DataProtectionContext _context;
+        private readonly DbContextOptions<DataProtectionContext> _options;
 
-        public SqlDataProtectionProvider(DataProtectionContext context)
+        public SqlDataProtectionProvider(DbContextOptions<DataProtectionContext> options)
         {
-            _context = context;
+            _options = options;
         }
 
         public IReadOnlyCollection<XElement> GetAllElements()
         {
-            var elements = new ReadOnlyCollection<XElement>(_context.KeyDataEntries.Select(x => XElement.Parse(x.XmlData)).ToList());
+            using (var context = new DataProtectionContext(_options))
+            {
+                var elements = new ReadOnlyCollection<XElement>(context.KeyData.Select(x => XElement.Parse(x.XmlData)).ToList());
 
-            return elements;
+                return elements;
+            } 
         }
 
         public void StoreElement(XElement element, string friendlyName)
         {
-            var existingEntity = _context.KeyDataEntries.SingleOrDefault(x => x.FriendlyName.Equals(friendlyName));
-
-            if (existingEntity == null)
+            using (var context = new DataProtectionContext(_options))
             {
-                //Add the new one
-                _context.KeyDataEntries.Add(new KeyDataEntry
+                var existingEntity = context.KeyData.SingleOrDefault(x => x.FriendlyName.Equals(friendlyName));
+
+                if (existingEntity == null)
                 {
-                    FriendlyName = friendlyName,
-                    XmlData = element.ToString()
-                });
-            }
-            else
-            {
-                //Update the existing one
-                existingEntity.XmlData = element.ToString();
-            }
+                    //Add the new one
+                    context.KeyData.Add(new KeyData
+                    {
+                        FriendlyName = friendlyName,
+                        XmlData = element.ToString()
+                    });
+                }
+                else
+                {
+                    //Update the existing one
+                    existingEntity.XmlData = element.ToString();
+                }
 
-            _context.SaveChanges();
+                context.SaveChanges();
+            }
         }
     }
 }

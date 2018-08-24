@@ -23,19 +23,15 @@ namespace SqlDataProtectionProvider
                 throw new ArgumentNullException(nameof(sqlConnectionString));
             }
 
-            builder.Services.AddDbContext<DataProtectionContext>(options => options.UseSqlServer(sqlConnectionString));
-
-            builder.Services.AddScoped<SqlDataProtectionProvider>();
-
-            builder.Services.AddScoped<IConfigureOptions<KeyManagementOptions>>(services =>
+            
+            builder.Services.Configure<KeyManagementOptions>(options =>
             {
-                var loggerFactory = services.GetService<ILoggerFactory>() ?? NullLoggerFactory.Instance;
-                var protectionProvider = services.GetRequiredService<SqlDataProtectionProvider>();
+                //Set up dbcontext options to use sql server and give it the connection string
+                var dbOptionsBuilder = new DbContextOptionsBuilder<DataProtectionContext>();
+                dbOptionsBuilder.UseSqlServer(sqlConnectionString);
+                var dbContextOptions = dbOptionsBuilder.Options;
 
-                return new ConfigureOptions<KeyManagementOptions>(options =>
-                {
-                    options.XmlRepository = protectionProvider;
-                });
+                options.XmlRepository = new SqlDataProtectionProvider(dbContextOptions);
             });
 
             return builder;
